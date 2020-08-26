@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = '!%c(8yb!15_3!w5-s*3j3&973h0p8nt6c0(bhowsa#c+k_(m%n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -123,7 +123,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MYDB_HOST = 'mydb-data-layer.herokuapp.com'
-MYDB_PORT = 8000
+MYDB_PORT = 80
 SERVICE_MYDB_DATA_LAYER = "mydb_data_layer"
 
 SERVICE_MYDB_ADAPTER_LAYER = "mydb_adapter_layer"
