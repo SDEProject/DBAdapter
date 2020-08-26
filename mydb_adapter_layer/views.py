@@ -11,13 +11,6 @@ import json
 
 
 class ResultView(View):
-
-    # Get the query parameter and sends a new request to the data layer in order to retrieve Results
-    def get(self, request, *args, **kwargs):
-        parameters = request.GET
-        response = requests.get(f"http://{settings.MYDB_HOST}:{settings.MYDB_PORT}/{settings.SERVICE_MYDB_DATA_LAYER}/result", parameters)
-        return JsonResponse(response.json(), safe=False)
-
     def get_first_address(self, parameters):
         response = requests.get(f"http://{settings.MYDB_HOST}:{settings.MYDB_PORT}/{settings.SERVICE_MYDB_DATA_LAYER}/address", parameters)
         if response.status_code == 200:
@@ -137,52 +130,3 @@ class ResultView(View):
             response = HttpResponseNotFound("No results found to save!")
 
             return HttpResponseNotFound(response)
-
-
-    '''
-     # 1. Check if the address already exists, then in negative case it creates the address. Otherwise get the id.
-    def post(self, request):
-        body = request.body.decode('utf-8')
-        json_request = json.loads(body)
-
-        result = {"name": json_request["name"], "accomodation_type": json_request["accomodation_type"],
-                  "description": json_request["description"],
-                  "lat": json_request["lat"], "long": json_request["long"], "stars": json_request["stars"],
-                  "type": json_request["type"]}
-
-        response = self.get_result(result)
-        if not response.json():
-            address = self.get_or_create_address(json_request)
-            if address:
-                response = self.create_new_result(result, address["id"])
-        return JsonResponse(response.json(), safe=False)
-        '''
-
-    def delete(self, request, *args, **kwargs):
-        id = kwargs['id']
-        response = requests.delete(f"http://{settings.MYDB_HOST}:{settings.MYDB_PORT}/{settings.SERVICE_MYDB_DATA_LAYER}/result/" + str(id) + "/")
-        return JsonResponse(response.json(), safe=False)
-
-class SearchView(View):
-    def get(self, request):
-        parameters = request.GET
-        response = requests.get(f"http://{settings.MYDB_HOST}:{settings.MYDB_PORT}/{settings.SERVICE_MYDB_DATA_LAYER}/search", parameters)
-        return JsonResponse(response.json(), safe=False)
-    '''
-    def get_search(self, parameters):
-        response = requests.get(f"http://{settings.MYDB_HOST}:{settings.MYDB_PORT}/{settings.SERVICE_MYDB_DATA_LAYER}/search", parameters)
-        return response
-
-    def post(self, request):
-        body = request.body.decode('utf-8')
-        json_request = json.loads(body)
-
-        response = self.get_search(json_request)
-        if not response.json():
-            response = requests.post(f"http://{settings.MYDB_HOST}:{settings.MYDB_PORT}/{settings.SERVICE_MYDB_DATA_LAYER}/search/", None, json_request)
-        return JsonResponse(response.json(), safe=False)
-    '''
-    def delete(self, request, *args, **kwargs):
-        id = kwargs['id']
-        response = requests.delete(f"http://{settings.MYDB_HOST}:{settings.MYDB_PORT}/{settings.SERVICE_MYDB_DATA_LAYER}/search/" + str(id) + "/")
-        return JsonResponse(response.json(), safe=False)

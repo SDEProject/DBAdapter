@@ -26,14 +26,11 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('', include(router.urls)),
-    path(r'result/<int:id>/', views.ResultView.as_view(), name='result'),
-    path(r'search/<int:id>/', views.SearchView.as_view(), name='search'),
 
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     url(r'result/', views.ResultView.as_view(), name='result'),
-    url(r'search/', views.SearchView.as_view(), name='search'),
 
     url(r'^api-auth/', include('rest_framework.urls'))
 ]
