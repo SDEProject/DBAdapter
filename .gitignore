@@ -1,3 +1,6 @@
 venv/
 .idea/
 db.sqlite3
+.DS_Store
+travelando/__pycache__/
+mydb_adapter_layer/__pycache__/
