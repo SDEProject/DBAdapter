@@ -38,8 +38,6 @@ class ResultView(View):
         information_result = {"name": result["name"], "lat_1": lat_1, "long_1": long_1, "type": context['subject']}
 
         if context['subject'] == "ActivityPath":
-            print(f"RES: {result}")
-
             information_result['lat_2'] = lat_2
             information_result['long_2'] = long_2
             information_result['path_from'] = result['poi_from']
@@ -47,8 +45,10 @@ class ResultView(View):
             information_result['time'] = result['time']['#text']
             information_result['path_length'] = result['length']['#text']
 
-            if 'path_difficulty' in result:
-                information_result['path_difficulty'] = result['path_difficulty']
+            if 'difficulty' in result:
+                path_difficulty = result['difficulty']
+                path_difficulty_type = path_difficulty.split("#")
+                information_result['path_difficulty'] = path_difficulty_type
             elif 'path_difficulty' in context:
                 information_result['path_difficulty'] = ""
                 for difficulty in context['path_difficulty']:
