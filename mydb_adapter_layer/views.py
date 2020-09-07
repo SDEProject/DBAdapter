@@ -38,6 +38,8 @@ class ResultView(View):
         information_result = {"name": result["name"], "lat_1": lat_1, "long_1": long_1, "type": context['subject']}
 
         if context['subject'] == "ActivityPath":
+            print(f"RES: {result}")
+
             information_result['lat_2'] = lat_2
             information_result['long_2'] = long_2
             information_result['path_from'] = result['poi_from']
