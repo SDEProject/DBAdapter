@@ -76,7 +76,7 @@ class ResultView(View):
         print(f"CONTEXT COMPLETE: {context}")
         address = {}
 
-        if context['subject.original'] != "mountain path":
+        if context['subject'] != "ActivityPath":
             address = {"street": result["street"], "number": result['number']}
 
             if "city" in result:
