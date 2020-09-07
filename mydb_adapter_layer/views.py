@@ -55,7 +55,7 @@ class ResultView(View):
                         information_result += " and "
                     elif len(context['path_difficulty']) > 2:
                         information_result += ", "
-        elif context['subject'] == "hotel":
+        elif context['subject'] == "Hotel":
             accomodationenum = result['accommodationenum']
             accomodation_type = accomodationenum.split("#")
 
