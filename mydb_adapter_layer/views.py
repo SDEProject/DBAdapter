@@ -48,7 +48,7 @@ class ResultView(View):
             if 'difficulty' in result:
                 path_difficulty = result['difficulty']
                 path_difficulty_type = path_difficulty.split("#")
-                information_result['path_difficulty'] = path_difficulty_type
+                information_result['path_difficulty'] = path_difficulty_type[1]
             elif 'path_difficulty' in context:
                 information_result['path_difficulty'] = ""
                 for difficulty in context['path_difficulty']:
