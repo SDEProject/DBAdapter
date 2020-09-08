@@ -110,25 +110,31 @@ class ResultView(View):
             f"http://{settings.SERVICE_KNOWLEDGE_HOST}:{settings.SERVICE_KNOWLEDGE_PORT}/{settings.SERVICE_KNOWLEDGE}/queries",
             context)
 
-        response_content = response_kg.content.decode('utf-8')
-        json_results = json.loads(response_content)
-        results = json_results['results']
+        if response_kg.status_code == 200:
+            response_content = response_kg.content.decode('utf-8')
+            json_results = json.loads(response_content)
+            results = json_results['results']
 
-        if results:
-            json_results = []
-            json_address = []
-            try:
-                for result in results:
-                    json_results.append(self.retrieve_result_information(result, context))
-                    print(f"ADDRESS {result}")
-                    json_address.append(self.retrieve_address_information(result, context))
-                response = {
-                    "results": json_results,
-                    "addresses": json_address
-                }
-                return JsonResponse(response, status=response_kg.status_code)
-            except:
-                return HttpResponseServerError()
-        else:
-            response = HttpResponseNotFound("No results found to save!")
-            return HttpResponseNotFound(response)
+            if results:
+                json_results = []
+                json_address = []
+                try:
+                    for result in results:
+                        json_results.append(self.retrieve_result_information(result, context))
+                        print(f"ADDRESS {result}")
+                        json_address.append(self.retrieve_address_information(result, context))
+                    response = {
+                        "results": json_results,
+                        "addresses": json_address
+                    }
+                    return JsonResponse(response, status=response_kg.status_code)
+                except:
+                    return HttpResponseServerError()
+            else:
+                response = HttpResponseNotFound("No results found to save!")
+                return HttpResponseNotFound(response)
+        elif response_kg.status_code == 404:
+            return HttpResponseNotFound(response_kg.status_code)
+        elif response_kg.status_code == 500:
+            return HttpResponseServerError()
+
