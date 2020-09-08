@@ -1,5 +1,5 @@
 import requests
-from django.http import JsonResponse, HttpResponse, HttpResponseNotFound
+from django.http import JsonResponse, HttpResponse, HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import render
 
 # Create your views here.
@@ -117,15 +117,18 @@ class ResultView(View):
         if results:
             json_results = []
             json_address = []
-            for result in results:
-                json_results.append(self.retrieve_result_information(result, context))
-                print(f"ADDRESS {result}")
-                json_address.append(self.retrieve_address_information(result, context))
-            response = {
-                "results": json_results,
-                "addresses": json_address
-            }
-            return JsonResponse(response, status=response_kg.status_code)
+            try:
+                for result in results:
+                    json_results.append(self.retrieve_result_information(result, context))
+                    print(f"ADDRESS {result}")
+                    json_address.append(self.retrieve_address_information(result, context))
+                response = {
+                    "results": json_results,
+                    "addresses": json_address
+                }
+                return JsonResponse(response, status=response_kg.status_code)
+            except:
+                return HttpResponseServerError()
         else:
             response = HttpResponseNotFound("No results found to save!")
             return HttpResponseNotFound(response)
