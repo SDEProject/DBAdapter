@@ -131,8 +131,7 @@ class ResultView(View):
                 except:
                     return HttpResponseServerError()
             else:
-                response = HttpResponseNotFound("No results found to save!")
-                return HttpResponseNotFound(response)
+                return HttpResponseNotFound()
         elif response_kg.status_code == 404:
             return HttpResponseNotFound(response_kg.status_code)
         elif response_kg.status_code == 500:
