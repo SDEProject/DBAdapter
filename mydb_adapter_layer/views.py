@@ -50,13 +50,7 @@ class ResultView(View):
                 path_difficulty_type = path_difficulty.split("#")
                 information_result['path_difficulty'] = path_difficulty_type[1]
             elif 'path_difficulty' in context:
-                information_result['path_difficulty'] = ""
-                for difficulty in context['path_difficulty']:
-                    information_result['path_difficulty'] += difficulty
-                    if len(context['path_difficulty']) == 2:
-                        information_result += " and "
-                    elif len(context['path_difficulty']) > 2:
-                        information_result += ", "
+                information_result['path_difficulty'] = context['path_difficulty']
         elif context['subject'] == "Hotel":
             accomodationenum = result['accommodationenum']
             accomodation_type = accomodationenum.split("#")
@@ -71,6 +65,7 @@ class ResultView(View):
             elif 'shop_enum' in context:
                 information_result['shop_enum'] = context['shop_enum']
 
+        print(f"Information result: {information_result}")
         return information_result
 
     def retrieve_address_information(self, result, context):
@@ -123,6 +118,7 @@ class ResultView(View):
                         json_results.append(self.retrieve_result_information(result, context))
                         print(f"ADDRESS {result}")
                         json_address.append(self.retrieve_address_information(result, context))
+
                     response = {
                         "results": json_results,
                         "addresses": json_address
